@@ -13,15 +13,21 @@ struct AppState {
 #[get("/completions")]
 async fn get_completions( data: web::Data<AppState>) -> Result<HttpResponse, Error>{
     let db = data.db_client.lock().unwrap();
-    
-    let mut res = Vec::new();
+    let query = db.query("SELECT \"challenge_id\" FROM \"completions\" WHEREE \"user\" = 'peppe'",&[]).await;
 
-    for row in db.query("SELECT \"challenge_id\" FROM \"completions\" WHERE \"user\" = 'peppe'",&[]).await.unwrap(){
-        let challenge: String = row.get("challenge_id");
-        res.push(challenge);
+    match query {
+        Ok(rows) => {
+            let mut res = Vec::new();
+            for row in rows {
+                let challenge: String = row.get("challenge_id");
+                res.push(challenge);
+            }
+            Ok(HttpResponse::Ok().body(res.join(",")))
+        },
+        Err(e) => {
+            Ok(HttpResponse::InternalServerError().body("Error, faild to run db query"))
+        }
     }
-
-    Ok(HttpResponse::Ok().body(res.join(",")))
 }
 
 #[actix_rt::main]
