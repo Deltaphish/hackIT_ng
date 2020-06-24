@@ -1,8 +1,10 @@
 use actix_files::Files;
 use actix_web::{middleware, App, HttpResponse, HttpServer, Error, web, get};
+use actix::clock::delay_for;
 use tokio_postgres::{NoTls, Error as DbError,Client};
 use std::env;
 use std::sync::Mutex;
+use std::time::Duration;
 
 struct AppState {
     db_client: Mutex<Client>,
@@ -33,7 +35,17 @@ async fn main() -> std::io::Result<()> {
                     None => String::from("postgresql://please:changeme@hackit-postgresql/hackit")
                 };
 
-    let (client, connection) = tokio_postgres::connect(&config, NoTls).await.unwrap();
+    let mut connection_attempt = tokio_postgres::connect(&config, NoTls).await;
+
+    while let Err(e) = connection_attempt {
+        eprintln!("Error establishing connection to db: {}\n Reattempting connection in 10 seconds", e);
+        delay_for(Duration::new(10,0)).await;
+        connection_attempt = tokio_postgres::connect(&config, NoTls).await;
+    }
+
+    let (client, connection) = connection_attempt.expect("Internal Error: database connection failiure was not handled");
+
+    println!("Successfully connected to db");
 
     actix::spawn(async move {
         if let Err(e) = connection.await {
