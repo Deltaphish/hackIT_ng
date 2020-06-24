@@ -13,7 +13,7 @@ struct AppState {
 #[get("/completions")]
 async fn get_completions( data: web::Data<AppState>) -> Result<HttpResponse, Error>{
     let db = data.db_client.lock().unwrap();
-    let query = db.query("SELECT \"challenge_id\" FROM \"completions\" WHEREE \"user\" = 'peppe'",&[]).await;
+    let query = db.query("SELECT \"challenge_id\" FROM \"completions\" WHERE \"user\" = 'peppe'",&[]).await;
 
     match query {
         Ok(rows) => {
