@@ -12,7 +12,10 @@ struct AppState {
 
 #[get("/completions")]
 async fn get_completions( data: web::Data<AppState>) -> Result<HttpResponse, Error>{
+
+    // Will cause panic if mutex is poisoned. This is intentional since the client could be corrupted"
     let db = data.db_client.lock().unwrap();
+    
     let query = db.query("SELECT \"challenge_id\" FROM \"completions\" WHERE \"user\" = 'peppe'",&[]).await;
 
     match query {
@@ -53,6 +56,7 @@ async fn main() -> std::io::Result<()> {
 
     println!("Successfully connected to db");
 
+    // Run connection in seperate thread
     actix::spawn(async move {
         if let Err(e) = connection.await {
             eprintln!("connection error: {}", e);
