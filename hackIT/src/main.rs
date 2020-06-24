@@ -41,13 +41,13 @@ async fn main() -> std::io::Result<()> {
         }
     });
 
-    let appState = web::Data::new(AppState{
+    let app_state = web::Data::new(AppState{
         db_client : Mutex::new(client),
     });
 
     HttpServer::new( move || {
         App::new()
-            .app_data(appState.clone())
+            .app_data(app_state.clone())
             .wrap(middleware::Logger::default())
             .service(get_completions)
             .service(Files::new("/static","static/").show_files_listing())
