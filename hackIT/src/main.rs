@@ -1,9 +1,7 @@
 use actix_files::Files;
-use actix_web::{middleware, App, HttpResponse, HttpServer, Error, Responder, web, get};
-use actix;
+use actix_web::{middleware, App, HttpResponse, HttpServer, Error, web, get};
 use tokio_postgres::{NoTls, Error as DbError,Client};
 use std::env;
-use std::ffi::OsString;
 use std::sync::Mutex;
 
 struct AppState {
@@ -12,7 +10,7 @@ struct AppState {
 
 #[get("/completions")]
 async fn get_completions( data: web::Data<AppState>) -> Result<HttpResponse, Error>{
-    let mut db = data.db_client.lock().unwrap();
+    let db = data.db_client.lock().unwrap();
     
     let mut res = Vec::new();
 
@@ -52,8 +50,8 @@ async fn main() -> std::io::Result<()> {
             .app_data(appState.clone())
             .wrap(middleware::Logger::default())
             .service(get_completions)
-            //.service(Files::new("/static","static/").show_files_listing())
-            //.service(Files::new("/","static/").index_file("index.html"))
+            .service(Files::new("/static","static/").show_files_listing())
+            .service(Files::new("/","static/").index_file("index.html"))
     })
 
     .bind("0.0.0.0:1337")?
