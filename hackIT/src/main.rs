@@ -44,7 +44,11 @@ async fn main() -> std::io::Result<()> {
                     None => String::from("postgresql://please:changeme@hackit-postgresql/hackit")
                 };
 
-    let mut connection_attempt = tokio_postgres::connect(&config, NoTls).await;
+    let clean_config = config.trim_matches('"');
+
+    println!("{}",clean_config);
+
+    let mut connection_attempt = tokio_postgres::connect(&clean_config, NoTls).await;
 
     while let Err(e) = connection_attempt {
         eprintln!("Error establishing connection to db: {}\n Reattempting connection in 10 seconds", e);

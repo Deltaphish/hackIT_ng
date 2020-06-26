@@ -14,7 +14,7 @@ services:
     postgresql:
         build: hackIT_db/.
         restart: always
-        container_name: ${POSTGRES_HOSTNAME}
+        container_name: hackit-postgresql 
         environment:
             - POSTGRES_USER
             - POSTGRES_PASSWORD
