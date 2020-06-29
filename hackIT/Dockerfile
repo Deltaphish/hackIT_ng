@@ -16,4 +16,4 @@ ADD ./test_challenges ./test_challenges
 
 RUN touch ./src/*
 
-CMD [ "cargo", "test"]
+CMD [ "cargo", "run"]
