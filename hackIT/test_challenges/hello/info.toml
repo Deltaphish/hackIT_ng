@@ -1,0 +1,7 @@
+id = "hello"
+lvl = 1
+name = "Hello world!"
+desc = "This seems like a good place to start, simply respond with \"Hello world!\""
+spec = "Respond with \"Hello world!\""
+scen = [["1.q","1.a"]]
+
