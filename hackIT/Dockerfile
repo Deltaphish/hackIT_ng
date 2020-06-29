@@ -7,12 +7,13 @@ WORKDIR /hack-it
 
 ADD Cargo.lock Cargo.toml ./
 
-RUN cargo build --release
+RUN cargo build
 RUN rm src/*.rs
 
 ADD ./src ./src
 ADD ./static ./static
+ADD ./test_challenges ./test_challenges
 
 RUN touch ./src/*
 
-CMD [ "cargo", "run", "--release" ]
+CMD [ "cargo", "run"]

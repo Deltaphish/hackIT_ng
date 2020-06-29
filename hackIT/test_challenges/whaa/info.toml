@@ -1,0 +1,7 @@
+id = "kuwa"
+lvl = 2
+name = "Whaaaa"
+desc = "This ... is requiem"
+spec = "The answere is the input repeated on 8 rows"
+scen = [["1.q","1.a"]]
+

@@ -1,3 +1,5 @@
+mod challenge;
+
 use actix_files::Files;
 use actix_web::{middleware, App, HttpResponse, HttpServer, Error, web, get};
 use actix::clock::delay_for;
