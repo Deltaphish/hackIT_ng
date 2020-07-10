@@ -1,0 +1,21 @@
+version: '3.7'
+services:
+   postgresql:
+      build: hackIT_db/.
+      restart: always
+      container_name: hackit-postgresql
+      ports:
+         - 5432:5432
+      environment:
+         - POSTGRES_USER
+         - POSTGRES_PASSWORD
+         - POSTGRES_DB
+
+   adminer:
+      image: adminer
+      container_name: hackit-adminer
+      restart: always
+      ports:
+         - 8080:8080
+      depends_on:
+          - postgresql
