@@ -6,6 +6,7 @@ services:
         tty: true
         environment:
             - DATABASE_URL
+            - HTTP_PORT
         ports:
             - "${HTTP_PORT}:1337"
         depends_on:

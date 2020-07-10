@@ -15,5 +15,5 @@ ADD ./static ./static
 ADD ./test_challenges ./test_challenges
 
 RUN touch ./src/*
-
+RUN touch ./.env
 CMD [ "cargo", "run"]
