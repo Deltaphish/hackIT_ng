@@ -1,21 +1,15 @@
 version: '3.7'
 services:
     hackit:
-        build: hackIT/.
-        container_name: hackit-app
-        tty: true
-        environment:
-            - DATABASE_URL
-            - HTTP_PORT
+        build: hackIT
         ports:
-            - "${HTTP_PORT}:1337"
-        depends_on:
-            - postgresql
+            - ${HTTP_PORT}:3000
+        volumes:
+            - /usr/src/app/target
+            - ./hackIT:/usr/src/app
         
     postgresql:
         build: hackIT_db/.
-        restart: always
-        container_name: hackit-postgresql 
         environment:
             - POSTGRES_USER
             - POSTGRES_PASSWORD
@@ -23,8 +17,6 @@ services:
 
     adminer:
         image: adminer
-        container_name: hackit-adminer
-        restart: always
         ports:
             - 8080:8080
         depends_on:
