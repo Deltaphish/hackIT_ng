@@ -1,19 +1,8 @@
 FROM rust:1.44.1
 
-ENV DATABASE_URL=${DATABASE_URL}
+WORKDIR /usr/src/app
 
-RUN USER=root cargo new --bin hack-it
-WORKDIR /hack-it
+# CMD cargo run
 
-ADD Cargo.lock Cargo.toml ./
-
-RUN cargo build
-RUN rm src/*.rs
-
-ADD ./src ./src
-ADD ./static ./static
-ADD ./test_challenges ./test_challenges
-
-RUN touch ./src/*
-RUN touch ./.env
-CMD [ "cargo", "run"]
+RUN cargo install systemfd cargo-watch
+CMD systemfd --no-pid -s http::0.0.0.0:3000 -- cargo watch -x run
