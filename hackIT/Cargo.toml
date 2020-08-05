@@ -7,21 +7,8 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-actix-rt = "1.0.0"
-actix-web = "2.0.0"
-actix-files = "0.2.1"
-actix-http = "1.0.1"
-actix = "0.9.0"
+rocket = "0.4.5"
 
-tera = "1.0"
-
-listenfd = "0.3"
-
-tokio-postgres = "0.5.4"
-env_logger = "0.7"
-log = "0.4.8"
-dotenv = "0.15.0"
-dotenv_codegen = "0.15.0"
 
 # For challenge-parser
 toml = "0.5.3"

@@ -3,7 +3,7 @@ services:
     hackit:
         build: hackIT
         ports:
-            - ${HTTP_PORT}:3000
+            - 8000:8000
         volumes:
             - /usr/src/app/target
             - ./hackIT:/usr/src/app
