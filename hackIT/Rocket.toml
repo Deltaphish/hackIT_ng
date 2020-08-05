@@ -1,2 +1,5 @@
 [development]
 address = "0.0.0.0"
+
+[global.databases]
+hackit = { url = "postgres://please:changeme@postgresql/hackit"}

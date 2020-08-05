@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Records</title>
+  </head>
+  <body>
+    <h1>Here are some records</h1>
+    {% for record in records %}
+    {{ record.name }}
+    {% endfor %}
+    <h3> Cool right? </h3>
+  </body>
+ </html>

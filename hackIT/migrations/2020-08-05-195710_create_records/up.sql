@@ -1,0 +1,6 @@
+CREATE TABLE records (
+	id SERIAL PRIMARY KEY,
+	name TEXT NOT NULL,
+	challenge_id TEXT NOT NULL,
+	toc TIMESTAMP NOT NULL
+)
