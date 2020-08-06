@@ -1,4 +1,4 @@
-use serde::Deserialize;
+use serde::{Serialize,Deserialize};
 use std::collections::HashMap;
 use std::env;
 use std::fs::{read_dir, read_to_string, DirEntry};
@@ -19,7 +19,7 @@ use std::path::PathBuf;
     };
 ```
 */
-#[derive(Deserialize, Debug, PartialEq, Eq)]
+#[derive(Serialize,Deserialize, Debug, PartialEq, Eq)]
 pub struct Challenge {
     id: String,
     lvl: u8,

@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+  <head></head>
+  <body>
+    <h1> Here are some challenges </h1>
+    {% for challenge in names %}
+    {{ challenge }}
+    {% endfor %}
+  </body>
+</html>
