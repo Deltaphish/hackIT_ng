@@ -4,15 +4,13 @@
 #[macro_use] extern crate diesel;
 
 use serde::Serialize;
-use tera::Context;
 use rocket::State;
 use rocket_contrib::templates::Template;
-use std::collections::HashMap;
 
 pub mod db;
 pub mod challenge;
 
-use crate::challenge::{Challenge,Challenges,load_challenges};
+use crate::challenge::{Challenges,load_challenges};
 use crate::db::{Record};
 
 #[database("hackit")]
@@ -22,10 +20,15 @@ struct UserRecordsConn(diesel::PgConnection);
 fn records( conn : UserRecordsConn ) -> Template {
 
     let recs = Record::all(&conn).unwrap();
+
+    #[derive(Serialize)]
+    struct Context{
+	records : Vec<Record>,
+    }
     
-    let mut context = HashMap::new();
-    context.insert("records",recs);
-    Template::render("records",&context)
+    let ctx = Context{ records: recs };
+    
+    Template::render("records",&ctx)
 }
 
 #[get("/challenges")]
@@ -42,9 +45,14 @@ fn challenges(chs : State<ConstState>) -> Template {
 
 #[get("/")]
 fn index() -> Template {
-    let mut context = HashMap::new();
-    context.insert("name","yoda");
-    Template::render("index",&context)
+
+    #[derive(Serialize)]
+    struct Context {
+	name : &'static str,
+    }
+    let ctx = Context{ name : "Yoda" };
+    
+    Template::render("index",&ctx)
 }
 
 struct ConstState{
